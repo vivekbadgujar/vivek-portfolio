@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vivek Badgujar - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1E1B4B, #4B3C8A);
+      font-family: 'Inter', sans-serif;
+      color: #F3F4F6;
+      overflow-x: hidden;
+    }
+    .typewriter {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 0.12em solid #F3F4F6;
+    }
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 27, 75, 0.9);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translateY(100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .project-card:hover .project-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .project-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .popup-content {
+      background: #F3F4F6;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 90%;
+      max-height: 90%;
+      overflow: auto;
+      text-align: center;
+      transform: scale(0);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+    .popup-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .contact-input {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .contact-input:focus {
+      transform: scale(1.03) translateY(-3px);
+      border-color: #A78BFA;
+      box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+    }
+    #particles-js-hero, #particles-js-projects {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .resume-btn, .social-btn, .whatsapp-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .resume-btn::after, .social-btn::after, .whatsapp-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.4s ease;
+    }
+    .resume-btn:hover::after, .social-btn:hover::after, .whatsapp-btn:hover::after {
+      left: 100%;
+    }
+    nav ul li a {
+      position: relative;
+      padding-bottom: 4px;
+    }
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: #A78BFA;
+      transition: width 0.3s ease;
+    }
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="bg-white/10 backdrop-blur-lg text-white p-4 sticky top-0 z-50 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold text-white tracking-tight">Vivek Badgujar</h1>
+      <ul class="flex space-x-6 text-sm">
+        <li><a href="#hero" class="hover:text-purple-300 transition-colors duration-300">Home</a></li>
+        <li><a href="#about" class="hover:text-purple-300 transition-colors duration-300">About</a></li>
+        <li><a href="#projects" class="hover:text-purple-300 transition-colors duration-300">Projects</a></li>
+        <li><a href="#experience" class="hover:text-purple-300 transition-colors duration-300">Experience</a></li>
+        <li><a href="#achievements" class="hover:text-purple-300 transition-colors duration-300">Achievements & Certifications</a></li>
+        <li><a href="#resume" class="hover:text-purple-300 transition-colors duration-300">Resume</a></li>
+        <li><a href="#contact" class="hover:text-purple-300 transition-colors duration-300">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative py-28 overflow-hidden">
+    <div id="particles-js-hero" class="absolute inset-0"></div>
+    <div class="container mx-auto px-6 text-center relative z-10 max-w-3xl">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-24 typewriter">Hi, I'm Vivek Badgujar</h1>
+      <div class="tagline-wrapper">
+        <p id="tagline" class="typewriter text-base md:text-lg text-purple-200 mb-12"></p>
+      </div>
+      <div class="flex justify-center space-x-6">
+        <a href="#contact" class="social-btn bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition-colors duration-300 transform hover:scale-105">Get in Touch</a>
+        <a href="YOUR_GITHUB_URL" target="_blank" class="social-btn bg-gray-800 text-white px-6 py-2 rounded-full hover:bg-gray-900 transition-colors duration-300 transform hover:scale-105 github-link">GitHub</a>
+        <a href="https://www.linkedin.com/in/vivek-badgujar" target="_blank" class="social-btn bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300 transform hover:scale-105 linkedin-link">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-white/10">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center text-white mb-12">About Me</h2>
+      <div class="flex flex-col md:flex-row items-center md:space-x-12">
+        <img src="https://i.ibb.co/xSJXsHzC/Whats-App-Image-2025-07-06-at-4-01-13-PM-1.jpg" alt="Vivek Badgujar" class="w-64 h-80 rounded-lg object-cover shadow-xl mb-6 md:mb-0 about-image" style="aspect-ratio: 3/4;">
+        <div class="about-text">
+          <p class="text-lg text-gray-200 leading-relaxed">
+            Vivek Badgujar | Aspiring AI/ML Engineer | Computer Science Undergraduate.<br>
+            I am an undergraduate student at Indus University, pursuing a Bachelor's degree in Computer Science and Engineering. Passionate about Artificial Intelligence, Machine Learning, and Data Science, I am committed to mastering cutting-edge technologies and building intelligent solutions.<br>
+            With a strong foundation in programming and problem-solving, I am continuously expanding my expertise in AI/ML, deep learning, and full-stack development. My goal is to contribute to impactful innovations, leverage data-driven insights, and develop scalable AI solutions for real-world applications.<br>
+            I am eager to collaborate, learn, and grow in the dynamic field of AI and software engineering. Let’s connect and explore opportunities together!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-20 relative">
+    <div id="particles-js-projects" class="absolute inset-0"></div>
+    <div class="container mx-auto px-6 relative z-10">
+      <h2 class="text-4xl font-bold text-center text-white mb-12">Projects</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div class="project-card p-8 rounded-xl shadow-2xl">
+          <h3 class="text-xl font-semibold text-purple-300 mb-3"> Om Finance – Finance Manager Application </h3>
+          <p class="text-gray-200 mb-4">Developed "Om Finance – Finance Manager," a Progressive Web App using React + Next.js, optimized for mobile-first with Vercel deployment. Packaged into a native Android app via Capacitor, featuring Expense Tracker, EMI Calculator, Dashboard, and Firebase Auth. Utilized React, Firebase, Capacitor, and GitHub. A self-taught #VibeCoding project showcasing responsive UI, keyboard-safe layout, and installable cross-device support, proving learning-by-doing works!</p>
+          <div class="project-overlay">
+            <a href="https://om-finance.vercel.app" target="_blank" class="text-white font-semibold hover:underline">View App</a>
+          </div>
+        </div>
+        <div class="project-card p-8 rounded-xl shadow-2xl">
+          <h3 class="text-xl font-semibold text-purple-300 mb-3">Build Website - Web Development</h3>
+          <p class="text-gray-200 mb-4">Developed a responsive website for "Om Finance," a trusted bank loan consultancy led by Mr. Vijay Badgujar. Integrated HTML, CSS, and Tailwind CSS for a modern, mobile-friendly design with AOS animations, Formspree contact forms, and SEO optimization. Features include service listings, client testimonials, and interactive popups. Deployed on Netlify with GitHub integration for seamless updates</p>
+          <div class="project-overlay">
+            <a href="https://om-finance-web.netlify.app" target="_blank" class="text-white font-semibold hover:underline">View Website</a>
+          </div>
+        </div>
+        <div class="project-card p-8 rounded-xl shadow-2xl">
+          <h3 class="text-xl font-semibold text-purple-300 mb-3">Data Dashboard</h3>
+          <p class="text-gray-200 mb-4">Created an interactive data visualization dashboard using React and D3.js for real-time analytics.</p>
+          <div class="project-overlay">
+            <a href="YOUR_PROJECT3_GITHUB_URL" target="_blank" class="text-white font-semibold hover:underline">View on GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="py-20 bg-white/10">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center text-white mb-12">Experience</h2>
+      <div class="space-y-8">
+        <div class="bg-white/5 p-8 rounded-xl shadow-2xl">
+          <h3 class="text-xl font-semibold text-purple-300 mb-2">Web Development Intern - Zidio Development</h3>
+          <p class="text-gray-300 mb-2">Jun 2025 - Aug 2025</p>
+          <p class="text-gray-200">Recently joined Zidio Development as a Web Developer Intern, where I’m actively contributing to real-world projects, collaborating with dynamic teams, and enhancing my skills in front-end and back-end web development. 🚀 Assisting in the design, development, and deployment of responsive web applications, collaborating with UI/UX teams, integrating third-party APIs, and participating in code reviews and performance optimization.</p>
+        </div>
+        <div class="bg-white/5 p-8 rounded-xl shadow-2xl">
+          <h3 class="text-xl font-semibold text-purple-300 mb-2">Generative AI - Prodigy InfoTech</h3>
+          <p class="text-gray-300 mb-2">Jun 2025 - Jul 2025</p>
+          <p class="text-gray-200">Working on real-world Generative AI projects under guidance. Enhancing skills in AI, prompt engineering, and project execution. Contributing to practical solutions and team collaboration. Gaining exposure to tools and methodologies in the AI ecosystem. Skills: Node.js, CSS, +3 skills.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Achievements & Certifications Section -->
+  <section id="achievements" class="py-20">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center text-white mb-12">Achievements & Certifications</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div class="bg-white/5 p-8 rounded-xl shadow-2xl text-center">
+          <img src="https://i.ibb.co/mCQRW0gC/1739518556347.jpg" alt="Certificate" class="w-80 h-60 object-cover mx-auto mb-4 cursor-pointer transform hover:scale-105 transition-all duration-300" onclick="openPopup('https://i.ibb.co/mCQRW0gC/1739518556347.jpg', 'AI for Beginners - HP LIFE', 'Certificate of Completion AI Course from HP FOUNDATION | HP LIFE, Artificial Intelligence (AI) and AI BEGINNERS +1 Skill')">
+          <h3 class="text-lg font-semibold text-purple-300">AI for Beginners - HP LIFE</h3>
+          <p class="text-gray-200">Certificate of Completion AI Course from HP FOUNDATION | HP LIFE, Artificial Intelligence (AI) and AI BEGINNERS +1 Skill</p>
+        </div>
+        <div class="bg-white/5 p-8 rounded-xl shadow-2xl text-center">
+          <img src="https://i.ibb.co/TxqmbQjJ/Python-Certificate-Vivek.jpg" alt="Certificate" class="w-80 h-60 object-cover mx-auto mb-4 cursor-pointer transform hover:scale-105 transition-all duration-300" onclick="openPopup('https://i.ibb.co/TxqmbQjJ/Python-Certificate-Vivek.jpg', 'Python (Programming Language)', 'Completed the Python Course from Udemy, recognized for contributions to open-source projects.')">
+          <h3 class="text-lg font-semibold text-purple-300">Python (Programming Language)</h3>
+          <p class="text-gray-200">Completed the Python Course from Udemy, recognized for contributions to open-source projects.</p>
+        </div>
+        <div class="bg-white/5 p-8 rounded-xl shadow-2xl text-center">
+          <img src="https://i.ibb.co/XrwkH2Bm/Offer-Letter-Vivek.jpg" alt="Offer Letter" class="w-80 h-60 object-cover mx-auto mb-4 cursor-pointer transform hover:scale-105 transition-all duration-300" onclick="openPopup('https://i.ibb.co/XrwkH2Bm/Offer-Letter-Vivek.jpg', 'Offer Letter', 'Assisting in the design, development, and deployment of responsive web applications, collaborating with UI/UX teams, integrating third-party APIs, and participating in code reviews and performance optimization. Skills: Express.js, HTML, +6 skills.')">
+          <h3 class="text-lg font-semibold text-purple-300">Offer Letter</h3>
+          <p class="text-gray-200">Assisting in the design, development, and deployment of responsive web applications, collaborating with UI/UX teams, integrating third-party APIs, and participating in code reviews and performance optimization. Skills: Express.js, HTML, +6 skills.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resume Section -->
+  <section id="resume" class="py-20 bg-white/10">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center text-white mb-12">Resume</h2>
+      <div class="max-w-2xl mx-auto bg-white/5 p-8 rounded-xl shadow-2xl">
+        <h3 class="text-2xl font-semibold text-purple-300 mb-6">Vivek Badgujar - Software Developer</h3>
+        <p class="text-gray-200 mb-4">Experienced in Python, JavaScript, Machine Learning, and Web Development</p>
+        <ul class="text-gray-200 space-y-2 mb-6">
+          <li><strong>Education:</strong> B.Tech in Computer Science & Engineering, Indus University, 2023-2027</li>
+          <li><strong>Experience:</strong> Web Development Intern - Zidio Development, Jun 2025</li>
+          <li><strong>Skills:</strong> Python, JavaScript, React, TensorFlow, AWS, Git</li>
+          <li><strong>Certifications:</strong> Certified Developer, 2025</li>
+        </ul>
+        <div class="flex justify-center space-x-4">
+          <a href="YOUR_RESUME_PDF_URL" target="_blank" class="resume-btn bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition-colors duration-300 inline-block">Download Resume PDF</a>
+          <a href="YOUR_RESUME_PREVIEW_URL" target="_blank" class="resume-btn bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition-colors duration-300 inline-block">Preview Resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20">
+    <div class="container mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center text-white mb-12">Contact Me</h2>
+      <form id="contact-form" class="max-w-lg mx-auto space-y-6">
+        <input type="text" name="name" placeholder="Your Name" class="contact-input w-full p-4 rounded-lg border border-gray-300 focus:outline-none focus:border-purple-600 bg-white/10 text-white" required>
+        <input type="email" name="email" placeholder="Your Email" class="contact-input w-full p-4 rounded-lg border border-gray-300 focus:outline-none focus:border-purple-600 bg-white/10 text-white" required>
+        <textarea name="message" placeholder="Your Message" rows="5" class="contact-input w-full p-4 rounded-lg border border-gray-300 focus:outline-none focus:border-purple-600 bg-white/10 text-white" required></textarea>
+        <div class="flex justify-center space-x-4">
+          <button type="submit" class="bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transform hover:scale-105 transition-all duration-300">Send Message</button>
+          <a href="https://wa.me/8488956724?text=Hi%20Vivek,%20I%20want%20to%20connect%20regarding%20your%20portfolio!" target="_blank" class="whatsapp-btn bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transform hover:scale-105 transition-all duration-300">WhatsApp Now</a>
+        </div>
+      </form>
+      <div class="mt-8 text-center space-y-4">
+        <p class="text-gray-200 transform hover:scale-105 transition-all duration-300">
+          Email: <a href="mailto:vivekbadgujar321@gmail.com" class="text-purple-300 hover:underline">vivekbadgujar321@gmail.com</a>
+        </p>
+        <p class="text-gray-200 transform hover:scale-105 transition-all duration-300">
+          LinkedIn: <a href="https://www.linkedin.com/in/vivek-badgujar" target="_blank" class="text-purple-300 hover:underline linkedin-link">Connect to LinkedIn</a>
+        </p>
+        <p class="text-gray-200 transform hover:scale-105 transition-all duration-300">
+          GitHub: <a href="YOUR_GITHUB_URL" target="_blank" class="text-purple-300 hover:underline github-link">GITHUB PROFILE</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popup for Achievements -->
+  <div id="popup" class="popup-overlay">
+    <div class="popup-content">
+      <img id="popup-image" src="" alt="Achievement" class="shadow-lg">
+      <h3 id="popup-title" class="text-2xl font-semibold text-purple-600 mt-6"></h3>
+      <p id="popup-description" class="text-gray-600 mt-3"></p>
+      <button onclick="closePopup()" class="mt-6 bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transform hover:scale-105 transition-all duration-300">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Initialize EmailJS
+    (function() {
+      emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Replace with your EmailJS public key (e.g., user_xxxxxxxx)
+    })();
+
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Parallax and Typewriter
+    gsap.to("#hero", {
+      scrollTrigger: {
+        trigger: "#hero",
+        scrub: 0.4,
+        start: "top top",
+        end: "bottom top",
+      },
+      backgroundPosition: "50% 110%",
+      duration: 0.8,
+    });
+    gsap.from(".typewriter", {
+      opacity: 0,
+      y: 60,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: (el, i) => i * 0.4,
+      stagger: 0.2
+    });
+
+    // Typing and Backspace Animation for Tagline
+    const taglines = [
+      "A Software Developer crafting innovative solutions.",
+      "Building the future with Python and JavaScript.",
+      "Transforming ideas into scalable applications.",
+      "Passionate about AI and web development."
+    ];
+    let taglineIndex = 0;
+    const taglineElement = document.getElementById("tagline");
+    function typeTagline() {
+      let currentText = taglines[taglineIndex];
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function type() {
+        if (!isDeleting && charIndex <= currentText.length) {
+          taglineElement.textContent = currentText.substring(0, charIndex);
+          charIndex++;
+          setTimeout(type, 80);
+        } else if (isDeleting && charIndex >= 0) {
+          taglineElement.textContent = currentText.substring(0, charIndex);
+          charIndex--;
+          setTimeout(type, 50);
+        } else if (!isDeleting && charIndex > currentText.length) {
+          setTimeout(() => { isDeleting = true; type(); }, 1000);
+        } else {
+          isDeleting = false;
+          taglineIndex = (taglineIndex + 1) % taglines.length;
+          currentText = taglines[taglineIndex];
+          setTimeout(type, 200);
+        }
+      }
+      type();
+    }
+    typeTagline();
+
+    // Hero Particles (Starry Background)
+    particlesJS("particles-js-hero", {
+      particles: {
+        number: { value: 120, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "star", star: { nb_sides: 5 } },
+        opacity: { value: 0.6, random: true },
+        size: { value: 2, random: true },
+        move: { enable: true, speed: 1.5, direction: "none", random: true, out_mode: "out" },
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "bubble" },
+          onclick: { enable: true, mode: "push" },
+        },
+        modes: {
+          bubble: { distance: 150, size: 4, duration: 2, opacity: 0.8 },
+          push: { particles_nb: 3 },
+        },
+      },
+    });
+
+    // About Section Animations
+    gsap.from(".about-image", {
+      scrollTrigger: {
+        trigger: ".about-image",
+        start: "top 80%",
+      },
+      opacity: 0,
+      scale: 0.8,
+      duration: 0.5,
+      ease: "power3.out",
+      delay: 0.1,
+    });
+    gsap.from(".about-text", {
+      scrollTrigger: {
+        trigger: ".about-text",
+        start: "top 80%",
+      },
+      opacity: 0,
+      y: 50,
+      duration: 0.5,
+      ease: "power3.out",
+      delay: 0.2,
+    });
+
+    // Project Cards
+    gsap.utils.toArray(".project-card").forEach((card, index) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 80%",
+        },
+        y: 60,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        delay: index * 0.1,
+      });
+    });
+
+    // Projects Particles (Starry Background like Grok AI)
+    particlesJS("particles-js-projects", {
+      particles: {
+        number: { value: 100, density: { enable: true, value_area: 800 } },
+        color: { value: "#A78BFA" },
+        shape: { type: "star", star: { nb_sides: 5 } },
+        opacity: { value: 0.5, random: true },
+        size: { value: 2.5, random: true },
+        move: { enable: true, speed: 2, direction: "none", random: true, out_mode: "out" },
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" },
+        },
+        modes: {
+          repulse: { distance: 100, duration: 0.4 },
+          push: { particles_nb: 4 },
+        },
+      },
+    });
+
+    // Experience
+    gsap.utils.toArray("#experience > div").forEach((item, index) => {
+      gsap.from(item, {
+        scrollTrigger: {
+          trigger: item,
+          start: "top 80%",
+        },
+        x: -60,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        delay: index * 0.1,
+      });
+    });
+
+    // Achievements
+    gsap.utils.toArray("#achievements > div > div").forEach((item, index) => {
+      gsap.from(item, {
+        scrollTrigger: {
+          trigger: item,
+          start: "top 80%",
+        },
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        delay: index * 0.1,
+      });
+    });
+
+    // Resume
+    gsap.from("#resume > div", {
+      scrollTrigger: {
+        trigger: "#resume",
+        start: "top 80%",
+      },
+      y: 60,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power3.out",
+    });
+
+    // Contact Form
+    gsap.utils.toArray(".contact-input, #contact button, .whatsapp-btn").forEach((element, index) => {
+      gsap.from(element, {
+        scrollTrigger: {
+          trigger: element,
+          start: "top 80%",
+        },
+        x: -50,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power3.out",
+        delay: index * 0.08,
+      });
+    });
+
+    // Popup
+    function openPopup(imageSrc, title, description) {
+      const popup = document.getElementById("popup");
+      const popupContent = document.querySelector(".popup-content");
+      document.getElementById("popup-image").src = imageSrc;
+      document.getElementById("popup-title").textContent = title;
+      document.getElementById("popup-description").textContent = description;
+      popup.style.display = "flex";
+      gsap.to(popupContent, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.4,
+        ease: "power3.out",
+      });
+    }
+    function closePopup() {
+      const popup = document.getElementById("popup");
+      const popupContent = document.querySelector(".popup-content");
+      gsap.to(popupContent, {
+        scale: 0,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power3.in",
+        onComplete: () => (popup.style.display = "none"),
+      });
+    }
+
+    // Contact Form Submission
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const githubLink = document.querySelector(".github-link").href || "Not provided";
+      const linkedinLink = document.querySelector(".linkedin-link").href || "https://www.linkedin.com/in/vivek-badgujar";
+      const formData = {
+        name: this.name.value,
+        email: this.email.value,
+        message: this.message.value,
+        github: githubLink,
+        linkedin: linkedinLink
+      };
+      emailjs.send("YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID", formData)
+        .then(() => {
+          alert("Message sent successfully!");
+          this.reset();
+        })
+        .catch((error) => {
+          alert("Failed to send message. Please check EmailJS setup or try again later.");
+          console.error("EmailJS Error:", error);
+        });
+    });
+  </script>
+</body>
+</html>
